@@ -4,20 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.robustasearchdemo.R
+import com.example.robustasearchdemo.databinding.FragmentResultsBinding
+import com.example.robustasearchdemo.ui.viewmodel.MainViewModel
 
 class ResultsFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var mBinding: FragmentResultsBinding
+    private lateinit var mMainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_results, container, false)
+    ): View {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_results, container, false)
+        mMainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        return mBinding.root
     }
 
     companion object {

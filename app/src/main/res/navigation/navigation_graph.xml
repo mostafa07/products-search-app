@@ -9,11 +9,7 @@
         android:id="@+id/welcomeFragment"
         android:name="com.example.robustasearchdemo.ui.fragment.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome">
-        <action
-            android:id="@+id/action_welcomeFragment_to_resultsFragment"
-            app:destination="@id/resultsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_welcome" />
 
     <fragment
         android:id="@+id/resultsFragment"

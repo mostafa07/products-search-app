@@ -6,4 +6,5 @@
 
     <string name="search_title">Search</string>
     <string name="search_hint">Search for a product..</string>
+    <string name="welcome_prompt">Welcome!\nEnter the product name to search for in the search bar</string>
 </resources>
