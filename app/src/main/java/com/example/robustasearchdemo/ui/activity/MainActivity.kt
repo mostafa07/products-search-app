@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
                     handler.removeCallbacksAndMessages(null)
                     handler.postDelayed({
                         if (query.length >= MIN_NUM_OF_CHARS_TO_START_SEARCH) {
-                            mMainViewModel.showResultsForQuery(query)
+                            mMainViewModel.setSearchQueryLiveData(query)
                         }
-                    }, USER_TYPING_DELAY_PERIOD)
+                    }, USER_TYPING_DELAY_PERIOD.toLong())
                     return false
                 }
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
             if (query!!.length >= MIN_NUM_OF_CHARS_TO_START_SEARCH) {
-                mMainViewModel.showResultsForQuery(query)
+                mMainViewModel.setSearchQueryLiveData(query)
             }
         }
     }
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val USER_TYPING_DELAY_PERIOD: Long = 400
-        const val MIN_NUM_OF_CHARS_TO_START_SEARCH = 3
+        const val USER_TYPING_DELAY_PERIOD: Short = 400
+        const val MIN_NUM_OF_CHARS_TO_START_SEARCH: Short = 3
     }
 }

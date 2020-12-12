@@ -31,6 +31,12 @@ class ResultsFragment : Fragment() {
         return mBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupButtons()
+    }
+
     private fun setupViewModel() {
         mMainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
@@ -44,6 +50,17 @@ class ResultsFragment : Fragment() {
         mMainViewModel.getProductsListLiveData().observe(requireActivity(), {
             mProductsAdapter.setData(it)
         })
+    }
+
+    private fun setupButtons() {
+        mBinding.loadMoreButton.setOnClickListener {
+            mMainViewModel.loadMoreResults()
+            mBinding.productsRecyclerView.scrollToPosition(0)
+        }
+
+        mBinding.fabButton.setOnClickListener {
+            mBinding.productsRecyclerView.scrollToPosition(0)
+        }
     }
 
     companion object {
