@@ -26,12 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        setupViewModel()
         setupViewModelObservations()
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        mNavController = navHostFragment.navController
+        setupNavigation()
 
         handleSearchIntent(intent)
     }
@@ -46,10 +44,6 @@ class MainActivity : AppCompatActivity() {
 
             val handler = Handler()
             setOnQueryTextListener(object : OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
-
                 override fun onQueryTextChange(query: String): Boolean {
                     handler.removeCallbacksAndMessages(null)
                     handler.postDelayed({
@@ -59,6 +53,8 @@ class MainActivity : AppCompatActivity() {
                     }, USER_TYPING_DELAY_PERIOD)
                     return false
                 }
+
+                override fun onQueryTextSubmit(query: String?): Boolean = false
             })
         }
         return true
@@ -78,12 +74,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupViewModel() {
+        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
     private fun setupViewModelObservations() {
         mMainViewModel.getShowResultsFragmentLiveData().observe(this, {
             if (it == true && mMainViewModel.isResultsFragmentVisible() == false) {
                 navigateToResultsFragment()
             }
         })
+    }
+
+    private fun setupNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        mNavController = navHostFragment.navController
     }
 
     private fun navigateToResultsFragment() {
